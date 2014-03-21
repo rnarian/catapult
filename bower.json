@@ -1,0 +1,21 @@
+{
+  "name": "catapult",
+  "version": "0.0.0",
+  "authors": [
+    "Marian Friedmann <marian.friedmann@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "basicss": "~0.1.5",
+    "jquery": "1.11",
+    "modernizr": "~2.7.1"
+  }
+}
