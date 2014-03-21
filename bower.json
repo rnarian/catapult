@@ -4,6 +4,7 @@
   "authors": [
     "Marian Friedmann <marian.friedmann@gmail.com>"
   ],
+  "description": "Easily kickstart new projects...",
   "license": "MIT",
   "private": true,
   "ignore": [
