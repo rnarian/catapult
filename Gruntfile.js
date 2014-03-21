@@ -60,7 +60,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 src: [
-                    '<%= dirs.bower %>/jquery/jquery.min.js',
+                    '<%= dirs.bower %>/jquery/dist/jquery.min.js',
                     '<%= dirs.js %>/*.js',
                     '!<%= dirs.js %>/build.js'
                 ],
