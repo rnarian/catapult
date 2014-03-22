@@ -1,6 +1,6 @@
 # catapult
 
-Easily kickstart new projects... 
+Starting point for new web projects... 
 
 **catapult** comes with a Gruntfile.js, preconfigured to minify images, concat and uglify js, compile scss. It also runs grunticon on svg icons and browser_sync if you're testing on multiple devices.
 
