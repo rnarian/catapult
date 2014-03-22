@@ -1,6 +1,7 @@
 {
   "name": "catapult",
   "version": "0.1.0",
+  "description": "Easily kickstart new projects...",
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-sass": "~0.7.2",
