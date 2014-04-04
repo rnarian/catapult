@@ -92,7 +92,7 @@ module.exports = function(grunt) {
             all: {
                 files: {
                     '<%= dirs.js %>/build.js': ['<%= dirs.js %>/build.js'],
-                    '<%= dirs.js %>/modernizr.js': ['<%= dirs.bower %>/modernizr/modernizr.js'],
+                    '<%= dirs.js %>/modernizr.js': ['<%= dirs.bower %>/modernizr/modernizr.js']
                 }
             }
         },
@@ -139,7 +139,7 @@ module.exports = function(grunt) {
                     dest: "<%= dirs.icons %>/grunticon"
                 }],
                 options: {
-                    cssprefix: "icon--"
+                    cssprefix: ".icon--"
                 }
             }
         },
