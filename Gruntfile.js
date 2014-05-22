@@ -62,6 +62,7 @@ module.exports = function(grunt) {
                 src: [
                     '<%= dirs.bower %>/jquery/dist/jquery.js',
                     '<%= dirs.js %>/*.js',
+                    '!<%= dirs.js %>/modernizr.js',
                     '!<%= dirs.js %>/build.js'
                 ],
                 dest: '<%= dirs.js %>/build.js',
@@ -73,6 +74,7 @@ module.exports = function(grunt) {
             all: [
                 'Gruntfile.js',
                 '<%= dirs.js %>/*.js',
+                '!<%= dirs.js %>/modernizr.js',
                 '!<%= dirs.js %>/build.js'
             ]
         },
