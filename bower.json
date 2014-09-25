@@ -17,6 +17,6 @@
   "dependencies": {
     "basicss": "~0.1.5",
     "jquery": "1.11",
-    "modernizr": "~2.7.1"
+    "modernizr": "~2.8.1"
   }
 }
