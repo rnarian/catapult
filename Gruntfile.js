@@ -11,6 +11,28 @@ module.exports = function(grunt) {
             icons: 'assets/icons'
         },
 
+        notify_hooks: {
+          options: {
+            enabled: true,
+            max_jshint_notifications: 5,
+            success: false,
+            duration: 3
+          }
+        },
+
+        notify: {
+          sass: {
+            options: {
+              message: 'SASS and Autoprefixer finished running'
+            }
+          },
+          jshint: {
+            options: {
+              message: 'jshint finished running'
+            }
+          }
+        },
+
         // SCSS
         sass: {
             dev: {
@@ -176,7 +198,7 @@ module.exports = function(grunt) {
             },
             sass: {
                 files: ['<%= dirs.css %>/*.scss'],
-                tasks: ['sass:dev', 'autoprefixer']
+                tasks: ['sass:dev', 'notify:sass', 'autoprefixer']
             },
             images: {
                 files: ['<%= dirs.images %>/*.{png,jpg,gif}'],
@@ -192,7 +214,7 @@ module.exports = function(grunt) {
             },
             scripts: {
                 files: ['Gruntfile.js', '<%= dirs.js %>/*.js'],
-                tasks: ['jshint', 'concat'],
+                tasks: ['jshint', 'jshint:sass', 'concat'],
                 options: {
                     spawn: false
                 }
