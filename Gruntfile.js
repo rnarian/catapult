@@ -123,7 +123,10 @@ module.exports = function(grunt) {
                     dest: "<%= dirs.icons %>/grunticon"
                 }],
                 options: {
-                    cssprefix: ".icon--"
+                    cssprefix: ".icon--",
+                    customselectors: {
+                      "*": [".icon--$1:before"]
+                    }
                 }
             }
         },
