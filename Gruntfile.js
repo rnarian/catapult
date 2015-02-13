@@ -11,28 +11,6 @@ module.exports = function(grunt) {
             icons: 'assets/icons'
         },
 
-        notify_hooks: {
-          options: {
-            enabled: true,
-            max_jshint_notifications: 5,
-            success: false,
-            duration: 3
-          }
-        },
-
-        notify: {
-          sass: {
-            options: {
-              message: 'SASS and Autoprefixer finished running'
-            }
-          },
-          jshint: {
-            options: {
-              message: 'jshint finished running'
-            }
-          }
-        },
-
         // SCSS
         sass: {
             dev: {
@@ -198,7 +176,7 @@ module.exports = function(grunt) {
             },
             sass: {
                 files: ['<%= dirs.css %>/*.scss'],
-                tasks: ['sass:dev', 'notify:sass', 'autoprefixer']
+                tasks: ['sass:dev', 'autoprefixer']
             },
             images: {
                 files: ['<%= dirs.images %>/*.{png,jpg,gif}'],
@@ -214,7 +192,7 @@ module.exports = function(grunt) {
             },
             scripts: {
                 files: ['Gruntfile.js', '<%= dirs.js %>/*.js'],
-                tasks: ['jshint', 'jshint:sass', 'concat'],
+                tasks: ['jshint', 'concat'],
                 options: {
                     spawn: false
                 }
@@ -223,6 +201,6 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('default', ['sass:build', 'autoprefixer', 'concat', 'uglify', 'imagemin']);
-    grunt.registerTask('dev', ['connect', 'watch']);
+    grunt.registerTask('dev', ['connect', 'watch', 'notify']);
     grunt.registerTask('dev:sync', ['browser_sync', 'watch']);
 };
