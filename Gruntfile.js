@@ -113,32 +113,12 @@ module.exports = function(grunt) {
             }
         },
 
-
-        // SVGmin
-        svgmin: {
-            options: {
-                plugins: [
-                  { removeViewBox: false },
-                  { removeUselessStrokeAndFill: false }
-                ]
-            },
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= dirs.icons %>',
-                    src: ['*.svg'],
-                    dest: '<%= dirs.icons %>/_min',
-                    ext: '.svg'
-                }]
-            }
-        },
-
         // Grunticon
         grunticon: {
             icons: {
                 files: [{
                     expand: true,
-                    cwd: '<%= dirs.icons %>/_min',
+                    cwd: '<%= dirs.icons %>',
                     src: ['*.svg', '*.png'],
                     dest: "<%= dirs.icons %>/grunticon"
                 }],
@@ -184,7 +164,7 @@ module.exports = function(grunt) {
             },
             icons: {
                 files: ['<%= dirs.icons %>/*'],
-                tasks: ['svgmin', 'grunticon']
+                tasks: ['grunticon']
             },
             html: {
                 files: ['*.html'],
