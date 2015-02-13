@@ -202,5 +202,5 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['sass:build', 'autoprefixer', 'concat', 'uglify', 'imagemin']);
     grunt.registerTask('dev', ['connect', 'watch', 'notify']);
-    grunt.registerTask('dev:sync', ['browser_sync', 'watch']);
+    grunt.registerTask('dev:sync', ['browser_sync', 'watch', 'notify']);
 };
