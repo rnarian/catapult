@@ -15,7 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "basicss": "~0.1.5",
+    "basicss": "~0.2.0",
     "jquery": "1.11",
     "modernizr": "~2.8.1"
   }
