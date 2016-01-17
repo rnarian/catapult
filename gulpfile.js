@@ -21,6 +21,14 @@ gulp.task('sass:dev', function () {
     .pipe(plugins.sourcemaps.write())
     .pipe(gulp.dest(dirs.css));
 });
+
+gulp.task('sass', function () {
+  gulp.src(dirs.css + '/*.scss')
+    .pipe(plugins.sass({outputStyle: 'compressed'}).on('error', plugins.sass.logError))
+    .pipe(plugins.autoprefixer(autoprefixerOptions))
+    .pipe(gulp.dest(dirs.css));
+});
+
 gulp.task('default', function() {
   // place code for your default task here
 });
