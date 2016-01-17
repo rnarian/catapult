@@ -42,6 +42,22 @@ gulp.task('imagemin', function () {
     .pipe(gulp.dest(dirs.images));
 });
 
+gulp.task('js', function () {
+  gulp.src([dirs.bower + '/modernizr/modernizr.js'])
+    .pipe(plugins.uglify())
+    .pipe(gulp.dest(dirs.js + '/'));
+
+  gulp.src([
+    dirs.bower + '/jquery/dist/jquery.js',
+    dirs.js + '/*.js',
+    '!' + dirs.js + '/modernizr.js',
+    '!' + dirs.js + '/build.js'
+  ])
+    .pipe(plugins.concat('build.js'))
+    .pipe(plugins.uglify())
+    .pipe(gulp.dest(dirs.js + '/'));
+});
+
 gulp.task('default', function() {
   // place code for your default task here
 });
