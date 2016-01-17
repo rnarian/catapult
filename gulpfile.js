@@ -8,9 +8,15 @@ var dirs = {
   images: 'assets/images',
   icons: 'assets/icons'
 }
+
+var autoprefixerOptions = {
+  browsers: ['last 2 versions']
+};
+
 gulp.task('sass:dev', function () {
   gulp.src(dirs.css + '/*.scss')
     .pipe(plugins.sass().on('error', plugins.sass.logError))
+    .pipe(plugins.autoprefixer(autoprefixerOptions))
     .pipe(gulp.dest(dirs.css));
 });
 gulp.task('default', function() {
