@@ -1,5 +1,6 @@
 'use strict';
 
+var pngquant = require('imagemin-pngquant');
 var gulp = require('gulp'),
     plugins = require('gulp-load-plugins')();
 
