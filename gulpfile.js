@@ -32,6 +32,16 @@ gulp.task('sass', function () {
     .pipe(gulp.dest(dirs.css));
 });
 
+gulp.task('imagemin', function () {
+  gulp.src(dirs.images + '/**/*')
+    .pipe(plugins.imagemin({
+      progressive: true,
+      svgoPlugins: [{removeViewBox: false}],
+      use: [pngquant()]
+    }))
+    .pipe(gulp.dest(dirs.images));
+});
+
 gulp.task('default', function() {
   // place code for your default task here
 });
