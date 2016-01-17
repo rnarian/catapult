@@ -72,6 +72,16 @@ var gulpiFiles = glob.sync(dirs.icons + '/**/*.svg');
 
 gulp.task('gulpicon', gulpicon(gulpiFiles, gulpiConfig));
 
+gulp.task('watch', function () {
+  gulp.watch(dirs.css + '/*.scss', ['sass:dev']);
+  gulp.watch([
+    dirs.js + '/*.js',
+    '!' + dirs.js + '/modernizr.js',
+    '!' + dirs.js + '/build.js'
+  ], ['js']);
+  gulp.watch(dirs.icons + '/**/*.svg', ['gulpicon']);
+});
+
 gulp.task('default', function() {
   // place code for your default task here
 });
