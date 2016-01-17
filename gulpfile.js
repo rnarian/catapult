@@ -1,7 +1,9 @@
 'use strict';
 
-var pngquant = require('imagemin-pngquant');
-var gulp = require('gulp'),
+var pngquant = require('imagemin-pngquant'),
+    glob = require('glob'),
+    gulp = require('gulp'),
+    gulpicon = require('gulpicon/tasks/gulpicon'),
     plugins = require('gulp-load-plugins')();
 
 var dirs = {
@@ -57,6 +59,18 @@ gulp.task('js', function () {
     .pipe(plugins.uglify())
     .pipe(gulp.dest(dirs.js + '/'));
 });
+
+var gulpiConfig = {
+    cssprefix: ".icon--",
+    customselectors: {
+      "*": [".icon--$1:before"]
+    },
+    dest: dirs.icons + '/grunticon'
+};
+
+var gulpiFiles = glob.sync(dirs.icons + '/**/*.svg');
+
+gulp.task('gulpicon', gulpicon(gulpiFiles, gulpiConfig));
 
 gulp.task('default', function() {
   // place code for your default task here
