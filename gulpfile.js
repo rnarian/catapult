@@ -82,6 +82,5 @@ gulp.task('watch', function () {
   gulp.watch(dirs.icons + '/**/*.svg', ['gulpicon']);
 });
 
-gulp.task('default', function() {
-  // place code for your default task here
-});
+gulp.task('default', ['sass', 'js', 'imagemin', 'gulpicon'], function () {});
+gulp.task('dev', ['default', 'watch'], function () {});
