@@ -15,8 +15,10 @@ var autoprefixerOptions = {
 
 gulp.task('sass:dev', function () {
   gulp.src(dirs.css + '/*.scss')
+    .pipe(plugins.sourcemaps.init())
     .pipe(plugins.sass().on('error', plugins.sass.logError))
     .pipe(plugins.autoprefixer(autoprefixerOptions))
+    .pipe(plugins.sourcemaps.write())
     .pipe(gulp.dest(dirs.css));
 });
 gulp.task('default', function() {
