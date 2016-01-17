@@ -18,6 +18,7 @@
     "grunt-sass": "^1.1.0",
     "gulp": "^3.9.0",
     "gulp-load-plugins": "^1.2.0",
+    "gulp-sass": "^2.1.1",
     "load-grunt-tasks": "~0.3.0"
   }
 }
