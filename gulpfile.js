@@ -63,7 +63,8 @@ gulp.task('js', function () {
   gulp.src(jsdirsClone)
     .pipe(plugins.concat('build.js'))
     .pipe(plugins.uglify())
-    .pipe(gulp.dest(dirs.js + '/'));
+    .pipe(gulp.dest(dirs.js + '/'))
+    .pipe(plugins.livereload());
 });
 
 gulp.task('gulpicon',
