@@ -14,6 +14,12 @@ var dirs = {
   icons: 'assets/icons'
 }
 
+var jsdirs = [
+  dirs.js + '/*.js',
+  '!' + dirs.js + '/modernizr.js',
+  '!' + dirs.js + '/build.js'
+]
+
 var autoprefixerOptions = {
   browsers: ['last 2 versions']
 };
@@ -49,12 +55,10 @@ gulp.task('js', function () {
     .pipe(plugins.uglify())
     .pipe(gulp.dest(dirs.js + '/'));
 
-  gulp.src([
-    dirs.bower + '/jquery/dist/jquery.js',
-    dirs.js + '/*.js',
-    '!' + dirs.js + '/modernizr.js',
-    '!' + dirs.js + '/build.js'
-  ])
+  var jsdirsClone = jsdirs.slice(0);
+  jsdirsClone.unshift(dirs.bower + '/jquery/dist/jquery.js');
+
+  gulp.src(jsdirsClone)
     .pipe(plugins.concat('build.js'))
     .pipe(plugins.uglify())
     .pipe(gulp.dest(dirs.js + '/'));
@@ -72,11 +76,7 @@ gulp.task('gulpicon',
 
 gulp.task('watch', function () {
   gulp.watch(dirs.css + '/*.scss', ['sass:dev']);
-  gulp.watch([
-    dirs.js + '/*.js',
-    '!' + dirs.js + '/modernizr.js',
-    '!' + dirs.js + '/build.js'
-  ], ['js']);
+  gulp.watch(jsdirs, ['js']);
   gulp.watch(dirs.icons + '/**/*.svg', ['gulpicon']);
 });
 
