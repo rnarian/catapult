@@ -1,8 +1,8 @@
 # catapult
 
-Starting point for new web projects... 
+Starting point for new web projects...
 
-**catapult** comes with a Gruntfile.js, preconfigured to minify images, concat and uglify js, compile scss. It also runs grunticon on svg icons and browser_sync if you're testing on multiple devices.
+**catapult** comes with a gulpfile.js, preconfigured to minify images, concat and uglify js, compile scss. It also runs gulpicon on svg icons.
 
 ---
 
@@ -21,8 +21,8 @@ Install dependencies:
 
 Build:
 
-    $ grunt
+    $ gulp
 
 Develop:
 
-    $ grunt dev // or: grunt dev:sync
+    $ gulp dev
