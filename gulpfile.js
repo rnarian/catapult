@@ -60,17 +60,15 @@ gulp.task('js', function () {
     .pipe(gulp.dest(dirs.js + '/'));
 });
 
-var gulpiConfig = {
+gulp.task('gulpicon',
+  gulpicon(glob.sync(dirs.icons + '/**/*.svg'), {
     cssprefix: ".icon--",
     customselectors: {
       "*": [".icon--$1:before"]
     },
     dest: dirs.icons + '/grunticon'
-};
-
-var gulpiFiles = glob.sync(dirs.icons + '/**/*.svg');
-
-gulp.task('gulpicon', gulpicon(gulpiFiles, gulpiConfig));
+  })
+);
 
 gulp.task('watch', function () {
   gulp.watch(dirs.css + '/*.scss', ['sass:dev']);
