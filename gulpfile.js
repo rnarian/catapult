@@ -55,7 +55,7 @@ var reportError = function (error) {
 
     report += chalk('TASK:') + ' [' + error.plugin + ']\n';
     if (lineNumber) { report += chalk('LINE:') + ' ' + lineNumber + '\n'; }
-    report += chalk('PROB:') + ' ' + error.message + '\n';
+    report += chalk('PROB:') + '\n' + error.message;
 
     console.error(report);
 
