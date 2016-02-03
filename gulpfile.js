@@ -4,6 +4,7 @@ var pngquant = require('imagemin-pngquant'),
     glob = require('glob'),
     gulp = require('gulp'),
     gulpicon = require('gulpicon/tasks/gulpicon'),
+    map = require('map-stream'),
     plugins = require('gulp-load-plugins')();
 
 var dirs = {
