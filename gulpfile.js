@@ -24,6 +24,43 @@ var autoprefixerOptions = {
   browsers: ['last 2 versions']
 };
 
+/**
+ * error Handler function
+ * See https://github.com/mikaelbr/gulp-notify/issues/81#issuecomment-100422179
+ */
+
+var reportError = function (error) {
+    var lineNumber = (error.line ? error.line : false);
+    var file = (error.message ? error.message.split('\n', 1)[0] : false);
+
+    plugins.notify({
+        title: 'Task Failed [' + error.plugin + ']',
+        message: (file ? file + ', ' : '') + (lineNumber ? 'Line: ' + lineNumber : '') + '\nSee console for more info...',
+        sound: 'Sosumi' // See: https://github.com/mikaelbr/node-notifier#all-notification-options-with-their-defaults
+    }).write(error);
+
+    plugins.util.beep(); // Beep 'sosumi' again
+
+    // Inspect the error object
+    //console.log(error);
+
+    // Easy error reporting
+    //console.log(error.toString());
+
+    // Pretty error reporting
+    var report = '';
+    var chalk = plugins.util.colors.white.bgRed;
+
+    report += chalk('TASK:') + ' [' + error.plugin + ']\n';
+    if (lineNumber) { report += chalk('LINE:') + ' ' + lineNumber + '\n'; }
+    report += chalk('PROB:') + ' ' + error.message + '\n';
+
+    console.error(report);
+
+    // Prevent the 'watch' task from stopping
+    this.emit('end');
+}
+
 gulp.task('sass:dev', function () {
   gulp.src(dirs.css + '/*.scss')
     .pipe(plugins.sourcemaps.init())
