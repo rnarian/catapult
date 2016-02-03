@@ -150,7 +150,7 @@ gulp.task('gulpicon',
 gulp.task('watch', function () {
   plugins.livereload.listen();
   gulp.watch(dirs.css + '/*.scss', ['sass:dev']);
-  gulp.watch(jsdirs, ['js']);
+  gulp.watch(jsdirs, ['jshint', 'js']);
   gulp.watch(dirs.icons + '/**/*.svg', ['gulpicon']);
 });
 
