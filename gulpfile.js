@@ -4,6 +4,7 @@ var pngquant = require('imagemin-pngquant'),
     glob = require('glob'),
     gulp = require('gulp'),
     gulpicon = require('gulpicon/tasks/gulpicon'),
+    map = require('map-stream'),
     plugins = require('gulp-load-plugins')();
 
 var dirs = {
@@ -24,14 +25,76 @@ var autoprefixerOptions = {
   browsers: ['last 2 versions']
 };
 
+/**
+ * error Handler function
+ * See https://github.com/mikaelbr/gulp-notify/issues/81#issuecomment-100422179
+ */
+
+var reportError = function (error) {
+
+    var lineNumber = (error.line ? error.line : false);
+    var file = (error.message ? error.message.split('\n', 1)[0] : false);
+
+    plugins.notify({
+        title: 'Task Failed [' + error.plugin + ']',
+        message: (file ? file + ', ' : '') + (lineNumber ? 'Line: ' + lineNumber + ', ' : '') + 'See console for more info...',
+        sound: 'Sosumi' // See: https://github.com/mikaelbr/node-notifier#all-notification-options-with-their-defaults
+    }).write(error);
+
+    plugins.util.beep(); // Beep 'sosumi' again
+
+    // Inspect the error object
+    //console.log(error);
+
+    // Easy error reporting
+    //console.log(error.toString());
+
+    // Pretty error reporting
+    var report = '';
+    var chalk = plugins.util.colors.red;
+
+    report += chalk('TASK:') + ' [' + error.plugin + ']\n';
+    if (lineNumber) { report += chalk('LINE:') + ' ' + lineNumber + '\n'; }
+    report += chalk('PROB:') + '\n' + error.message;
+
+    console.error(report);
+
+    // Prevent the 'watch' task from stopping
+    this.emit('end');
+}
+
+var jshintReporter = function(file, cb) {
+  return map(function (file, cb) {
+    if (file.jshint.success) {
+      return false;
+    }
+
+    var errors = file.jshint.results.map(function (err) {
+      if (err) {
+        return file.path + ', Line '+ err.error.line +'\n' + err.error.raw + '\n';
+      }
+    }).join('\n');
+
+    var errObj = {};
+    errObj.plugin = 'gulp-jshint';
+    errObj.message = errors;
+
+    throw errObj;
+  });
+};
+
 gulp.task('sass:dev', function () {
   gulp.src(dirs.css + '/*.scss')
+    .pipe(plugins.plumber({
+      errorHandler: reportError
+    }))
     .pipe(plugins.sourcemaps.init())
     .pipe(plugins.sass().on('error', plugins.sass.logError))
     .pipe(plugins.autoprefixer(autoprefixerOptions))
     .pipe(plugins.sourcemaps.write())
     .pipe(gulp.dest(dirs.css))
-    .pipe(plugins.livereload());
+    .pipe(plugins.livereload())
+    .on('error', reportError);
 });
 
 gulp.task('sass', function () {
@@ -57,10 +120,6 @@ gulp.task('js', function () {
     .pipe(plugins.uglify())
     .pipe(gulp.dest(dirs.js + '/'));
 
-  gulp.src(jsdirs)
-    .pipe(plugins.jshint())
-    .pipe(plugins.jshint.reporter('default'));
-
   var jsdirsClone = jsdirs.slice(0);
   jsdirsClone.unshift(dirs.bower + '/jquery/dist/jquery.js');
 
@@ -69,6 +128,13 @@ gulp.task('js', function () {
     .pipe(plugins.uglify())
     .pipe(gulp.dest(dirs.js + '/'))
     .pipe(plugins.livereload());
+});
+
+gulp.task('jshint', function() {
+  gulp.src(jsdirs)
+    .pipe(plugins.jshint())
+    .pipe(jshintReporter())
+    .on('error', reportError);
 });
 
 gulp.task('gulpicon',
@@ -84,7 +150,7 @@ gulp.task('gulpicon',
 gulp.task('watch', function () {
   plugins.livereload.listen();
   gulp.watch(dirs.css + '/*.scss', ['sass:dev']);
-  gulp.watch(jsdirs, ['js']);
+  gulp.watch(jsdirs, ['jshint', 'js']);
   gulp.watch(dirs.icons + '/**/*.svg', ['gulpicon']);
 });
 
