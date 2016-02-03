@@ -51,7 +51,7 @@ var reportError = function (error) {
 
     // Pretty error reporting
     var report = '';
-    var chalk = plugins.util.colors.white.bgRed;
+    var chalk = plugins.util.colors.red;
 
     report += chalk('TASK:') + ' [' + error.plugin + ']\n';
     if (lineNumber) { report += chalk('LINE:') + ' ' + lineNumber + '\n'; }
