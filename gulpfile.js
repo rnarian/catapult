@@ -63,12 +63,16 @@ var reportError = function (error) {
 
 gulp.task('sass:dev', function () {
   gulp.src(dirs.css + '/*.scss')
+    .pipe(plugins.plumber({
+      errorHandler: reportError
+    }))
     .pipe(plugins.sourcemaps.init())
     .pipe(plugins.sass().on('error', plugins.sass.logError))
     .pipe(plugins.autoprefixer(autoprefixerOptions))
     .pipe(plugins.sourcemaps.write())
     .pipe(gulp.dest(dirs.css))
-    .pipe(plugins.livereload());
+    .pipe(plugins.livereload())
+    .on('error', reportError);
 });
 
 gulp.task('sass', function () {
