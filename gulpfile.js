@@ -100,10 +100,6 @@ gulp.task('js', function () {
     .pipe(plugins.uglify())
     .pipe(gulp.dest(dirs.js + '/'));
 
-  gulp.src(jsdirs)
-    .pipe(plugins.jshint())
-    .pipe(plugins.jshint.reporter('default'));
-
   var jsdirsClone = jsdirs.slice(0);
   jsdirsClone.unshift(dirs.bower + '/jquery/dist/jquery.js');
 
@@ -112,6 +108,13 @@ gulp.task('js', function () {
     .pipe(plugins.uglify())
     .pipe(gulp.dest(dirs.js + '/'))
     .pipe(plugins.livereload());
+});
+
+gulp.task('jshint', function() {
+  gulp.src(jsdirs)
+    .pipe(plugins.jshint())
+    .pipe(jshintReporter())
+    .on('error', reportError);
 });
 
 gulp.task('gulpicon',
