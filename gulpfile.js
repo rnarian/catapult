@@ -31,12 +31,13 @@ var autoprefixerOptions = {
  */
 
 var reportError = function (error) {
+
     var lineNumber = (error.line ? error.line : false);
     var file = (error.message ? error.message.split('\n', 1)[0] : false);
 
     plugins.notify({
         title: 'Task Failed [' + error.plugin + ']',
-        message: (file ? file + ', ' : '') + (lineNumber ? 'Line: ' + lineNumber : '') + '\nSee console for more info...',
+        message: (file ? file + ', ' : '') + (lineNumber ? 'Line: ' + lineNumber + ', ' : '') + 'See console for more info...',
         sound: 'Sosumi' // See: https://github.com/mikaelbr/node-notifier#all-notification-options-with-their-defaults
     }).write(error);
 
