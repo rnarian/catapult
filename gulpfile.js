@@ -32,35 +32,35 @@ var autoprefixerOptions = {
 
 var reportError = function (error) {
 
-    var lineNumber = (error.line ? error.line : false);
-    var file = (error.message ? error.message.split('\n', 1)[0] : false);
+  var lineNumber = (error.line ? error.line : false);
+  var file = (error.message ? error.message.split('\n', 1)[0] : false);
 
-    plugins.notify({
-        title: 'Task Failed [' + error.plugin + ']',
-        message: (file ? file + ', ' : '') + (lineNumber ? 'Line: ' + lineNumber + ', ' : '') + 'See console for more info...',
-        sound: 'Sosumi' // See: https://github.com/mikaelbr/node-notifier#all-notification-options-with-their-defaults
-    }).write(error);
+  plugins.notify({
+    title: 'Task Failed [' + error.plugin + ']',
+    message: (file ? file + ', ' : '') + (lineNumber ? 'Line: ' + lineNumber + ', ' : '') + 'See console for more info...',
+    sound: 'Sosumi' // See: https://github.com/mikaelbr/node-notifier#all-notification-options-with-their-defaults
+  }).write(error);
 
-    plugins.util.beep(); // Beep 'sosumi' again
+  plugins.util.beep(); // Beep 'sosumi' again
 
-    // Inspect the error object
-    //console.log(error);
+  // Inspect the error object
+  //console.log(error);
 
-    // Easy error reporting
-    //console.log(error.toString());
+  // Easy error reporting
+  //console.log(error.toString());
 
-    // Pretty error reporting
-    var report = '';
-    var chalk = plugins.util.colors.red;
+  // Pretty error reporting
+  var report = '';
+  var chalk = plugins.util.colors.red;
 
-    report += chalk('TASK:') + ' [' + error.plugin + ']\n';
-    if (lineNumber) { report += chalk('LINE:') + ' ' + lineNumber + '\n'; }
-    report += chalk('PROB:') + '\n' + error.message;
+  report += chalk('TASK:') + ' [' + error.plugin + ']\n';
+  if (lineNumber) { report += chalk('LINE:') + ' ' + lineNumber + '\n'; }
+  report += chalk('PROB:') + '\n' + error.message;
 
-    console.error(report);
+  console.error(report);
 
-    // Prevent the 'watch' task from stopping
-    this.emit('end');
+  // Prevent the 'watch' task from stopping
+  this.emit('end');
 }
 
 var jshintReporter = function(file, cb) {
