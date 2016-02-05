@@ -62,26 +62,6 @@ var reportError = function (error) {
   this.emit('end');
 }
 
-var jshintReporter = function(file, cb) {
-  return map(function (file, cb) {
-    if (file.jshint.success) {
-      return false;
-    }
-
-    var errors = file.jshint.results.map(function (err) {
-      if (err) {
-        return file.path + ', Line '+ err.error.line +'\n' + err.error.raw + '\n';
-      }
-    }).join('\n');
-
-    var errObj = {};
-    errObj.plugin = 'gulp-jshint';
-    errObj.message = errors;
-
-    throw errObj;
-  });
-};
-
 gulp.task('sass:dev', function () {
   gulp.src(dirs.css + '/*.scss')
     .pipe(plugins.plumber({
