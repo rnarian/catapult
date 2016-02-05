@@ -4,7 +4,6 @@ var pngquant = require('imagemin-pngquant'),
     glob = require('glob'),
     gulp = require('gulp'),
     gulpicon = require('gulpicon/tasks/gulpicon'),
-    map = require('map-stream'),
     plugins = require('gulp-load-plugins')();
 
 var dirs = {
@@ -63,26 +62,6 @@ var reportError = function (error) {
   this.emit('end');
 }
 
-var jshintReporter = function(file, cb) {
-  return map(function (file, cb) {
-    if (file.jshint.success) {
-      return false;
-    }
-
-    var errors = file.jshint.results.map(function (err) {
-      if (err) {
-        return file.path + ', Line '+ err.error.line +'\n' + err.error.raw + '\n';
-      }
-    }).join('\n');
-
-    var errObj = {};
-    errObj.plugin = 'gulp-jshint';
-    errObj.message = errors;
-
-    throw errObj;
-  });
-};
-
 gulp.task('sass:dev', function () {
   gulp.src(dirs.css + '/*.scss')
     .pipe(plugins.plumber({
@@ -124,16 +103,13 @@ gulp.task('js', function () {
   jsdirsClone.unshift(dirs.bower + '/jquery/dist/jquery.js');
 
   gulp.src(jsdirsClone)
-    .pipe(plugins.concat('build.js'))
+    .pipe(plugins.plumber({
+      errorHandler: reportError
+    }))
     .pipe(plugins.uglify())
+    .pipe(plugins.concat('build.js'))
     .pipe(gulp.dest(dirs.js + '/'))
-    .pipe(plugins.livereload());
-});
-
-gulp.task('jshint', function() {
-  gulp.src(jsdirs)
-    .pipe(plugins.jshint())
-    .pipe(jshintReporter())
+    .pipe(plugins.livereload())
     .on('error', reportError);
 });
 
@@ -150,7 +126,7 @@ gulp.task('gulpicon',
 gulp.task('watch', function () {
   plugins.livereload.listen();
   gulp.watch(dirs.css + '/*.scss', ['sass:dev']);
-  gulp.watch(jsdirs, ['jshint', 'js']);
+  gulp.watch(jsdirs, ['js']);
   gulp.watch(dirs.icons + '/**/*.svg', ['gulpicon']);
 });
 
