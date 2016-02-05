@@ -103,8 +103,8 @@ gulp.task('js', function () {
   jsdirsClone.unshift(dirs.bower + '/jquery/dist/jquery.js');
 
   gulp.src(jsdirsClone)
-    .pipe(plugins.concat('build.js'))
     .pipe(plugins.uglify())
+    .pipe(plugins.concat('build.js'))
     .pipe(gulp.dest(dirs.js + '/'))
     .pipe(plugins.livereload());
 });
