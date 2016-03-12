@@ -1,6 +1,6 @@
 {
   "name": "catapult",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Starting point for new web projects...",
   "devDependencies": {
     "gulp": "^3.9.0",
